@@ -15,7 +15,6 @@ public class Pracownik {
   public final String name;
   private List<String> umiejetnosci;
   private Float kosztGodzinyPracy;
-  private Float dlugoscWykonywaniaZadania;
   private Float procentowyKosztDouczenia; 
 
   public Pracownik(String name){
@@ -36,14 +35,6 @@ public class Pracownik {
   
   public void setKosztGodzinyPracy(Float kosztGodzinyPracy) {
     this.kosztGodzinyPracy = kosztGodzinyPracy;
-  }
-  
-  public Float getDlugoscWykonywaniaZadania() {
-    return dlugoscWykonywaniaZadania;
-  }
-  
-  public void setDlugoscWykonywaniaZadania(Float dlugoscWykonywaniaZadania) {
-    this.dlugoscWykonywaniaZadania = dlugoscWykonywaniaZadania;
   }
   
   public Float getProcentowyKosztDouczenia() {

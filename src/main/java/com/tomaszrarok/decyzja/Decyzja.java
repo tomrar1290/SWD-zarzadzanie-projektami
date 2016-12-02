@@ -42,8 +42,9 @@ public class Decyzja {
 
         kosztDecyzji = 0.0;
 
+        // FIXME koszt razy ilosc godzin na zadanie
         for (Map.Entry<Integer, Pracownik> entry : pracownikZadanie.entrySet()) {
-            kosztDecyzji += entry.getValue().getKosztGodzinyPracy();
+            //kosztDecyzji += entry.getValue().getKosztGodzinyPracy();
         }
 
         return kosztDecyzji;
@@ -56,8 +57,9 @@ public class Decyzja {
 
         czasDecyzji = 0.0;
 
+        // FIXME czas zadania * procent od nie posiadanych umiejetnosci
         for (Map.Entry<Integer, Pracownik> entry : pracownikZadanie.entrySet()) {
-            czasDecyzji += entry.getValue().getDlugoscWykonywaniaZadania();
+            //czasDecyzji += entry.getValue().getDlugoscWykonywaniaZadania();
         }
 
         return czasDecyzji;
