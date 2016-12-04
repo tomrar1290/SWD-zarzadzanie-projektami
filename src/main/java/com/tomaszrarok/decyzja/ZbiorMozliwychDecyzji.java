@@ -141,9 +141,9 @@ public class ZbiorMozliwychDecyzji {
 
         System.out.println("Idealnie:");
 
-        //for (Decyzja listaDecyzji1 : listaDecyzji) {
-        //    System.out.println(listaDecyzji1.toString());
-        //}
+        for (Decyzja listaDecyzji1 : listaDecyzji) {
+            System.out.println(listaDecyzji1.toString());
+        }
         
         return new ArrayList<Decyzja>(listaDecyzji);
     }

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -20,6 +21,7 @@ public class KombinacjaDecyzji {
   private final List<List<Integer>> listaMozliwychDecyzji;
 
   public List<List<Integer>> getListaMozliwychDecyzji() {
+    //System.out.println(listaMozliwychDecyzji.toString());
     return listaMozliwychDecyzji;
   }
   
@@ -42,7 +44,8 @@ public class KombinacjaDecyzji {
 
   private void znajdzKombinacje(Integer arr[], Integer data[], Integer start, Integer end, Integer index, Integer r) {
 
-    if (index == r) {
+    if (Objects.equals(index, r)) {
+      //System.out.println(Arrays.toString(data));
       //kombinacja ma rozmiar szukany r, szukaj kolejnych
       listaMozliwychDecyzji.addAll( pobierzPermutacje(data) );     
       return;
@@ -59,12 +62,12 @@ public class KombinacjaDecyzji {
     }
   }
   
-    private Set<List<Integer>> pobierzPermutacje(Integer [] combination) { 
-      //System.err.println("Permutacja: " + Arrays.toString(combination));
+    private Set<List<Integer>> pobierzPermutacje(Integer [] combination) {       
       Set<List<Integer>> setOfArray = new HashSet<>();
         
-      //pobierzPermutacje(combination, 0, setOfArray); 
-      System.err.println(setOfArray.toString());
+      pobierzPermutacje(combination, 0, setOfArray); 
+      //System.err.println(setOfArray.toString());
+      
       return setOfArray;
   }
     

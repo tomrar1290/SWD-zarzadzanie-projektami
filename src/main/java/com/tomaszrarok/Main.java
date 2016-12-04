@@ -49,24 +49,28 @@ public class Main {
         projekt.setZadania(zadania);
         projekt.setWymagania(new ArrayList<>(Arrays.asList(new String[]{"umiejetnosc1", "umiejetnosc2", "umiejetnosc3", "umiejetnosc4", "umiejetnosc5", "umiejetnosc6"})));
 
-        //PRACOWNIK 1
+         //PRACOWNIK 1
         Pracownik pracownik1 = new Pracownik("p1");
         pracownik1.setKosztGodzinyPracy(20.0);
+        pracownik1.setProcentowyKosztDouczenia(50.0);
         pracownik1.setUmiejetnosci(new ArrayList<>(Arrays.asList(new String[]{"umiejetnosc1", "umiejetnosc2", "umiejetnosc3", "umiejetnosc4", "umiejetnosc5"})));
 
         //PRACOWNIK 2
         Pracownik pracownik2 = new Pracownik("p2");
         pracownik2.setKosztGodzinyPracy(18.0);
+        pracownik2.setProcentowyKosztDouczenia(50.0);
         pracownik2.setUmiejetnosci(new ArrayList<>(Arrays.asList(new String[]{"umiejetnosc1", "umiejetnosc2", "umiejetnosc3", "umiejetnosc4"})));
 
         //PRACOWNIK 3
         Pracownik pracownik3 = new Pracownik("p3");
         pracownik3.setKosztGodzinyPracy(15.0);
+        pracownik3.setProcentowyKosztDouczenia(50.0);
         pracownik3.setUmiejetnosci(new ArrayList<>(Arrays.asList(new String[]{"umiejetnosc1", "umiejetnosc2", "umiejetnosc3"})));
 
         //PRACOWNIK 4
         Pracownik pracownik4 = new Pracownik("p4");
         pracownik4.setKosztGodzinyPracy(25.0);
+        pracownik4.setProcentowyKosztDouczenia(50.0);
         pracownik4.setUmiejetnosci(new ArrayList<String>(Arrays.asList(new String[]{"umiejetnosc1", "umiejetnosc2"})));
 
         DaneWejsciowe daneWejsciowe;
@@ -91,7 +95,7 @@ public class Main {
 
         ZbiorMozliwychDecyzji zmd = new ZbiorMozliwychDecyzji(projekt, mapaPracownikow);
         
-        //zmd.pobierzWedlugNajlepszej();
+        zmd.pobierzWedlugNajlepszej();
 
     }
 

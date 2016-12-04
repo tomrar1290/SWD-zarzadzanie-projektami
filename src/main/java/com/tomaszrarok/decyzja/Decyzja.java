@@ -32,7 +32,7 @@ public class Decyzja {
 
         int index=0;
         for (Integer i : mozliwaDecyzja) {
-            pracownikZadanie.put(i, pracownicy.get(mozliwaDecyzja.get(index)));
+            pracownikZadanie.put(index, pracownicy.get(mozliwaDecyzja.get(index)));
             index++;
         }
     }
@@ -44,9 +44,10 @@ public class Decyzja {
 
         kosztDecyzji = 0.0;
 
-        // FIXME koszt razy ilosc godzin na zadanie
+        Integer index = 0;
         for (Map.Entry<Integer, Pracownik> entry : pracownikZadanie.entrySet()) {
-            //kosztDecyzji += entry.getValue().getKosztGodzinyPracy();
+            kosztDecyzji += pojedynczyKoszt(entry, index);
+            index++;
         }
 
         return kosztDecyzji;
@@ -59,9 +60,10 @@ public class Decyzja {
 
         czasDecyzji = 0.0;
 
-        // FIXME czas zadania * procent od nie posiadanych umiejetnosci
+       Integer index = 0;
         for (Map.Entry<Integer, Pracownik> entry : pracownikZadanie.entrySet()) {
-            //czasDecyzji += entry.getValue().getDlugoscWykonywaniaZadania();
+            czasDecyzji += pojedynczyCzas(entry, index);
+            index++;
         }
 
         return czasDecyzji;
@@ -74,11 +76,8 @@ public class Decyzja {
             niezgodnoscUmiejetnosci = 0.0;
             for (Map.Entry<Integer, Pracownik> entry : pracownikZadanie.entrySet()) {
 
-                temp = new ArrayList<String>(entry.getValue().getUmiejetnosci());
-                temp.retainAll(projekt.getWymagania());
-
                 //suma niezgodnosci
-                niezgodnoscUmiejetnosci += 100 - (temp.size() * 100.0f) / projekt.getWymagania().size();
+                niezgodnoscUmiejetnosci += pojedynczaNiezgodnosc(entry);
             }
 
             //srednia niezgodnosc ze wszystkich
@@ -97,22 +96,18 @@ public class Decyzja {
         return 100 - (temp.size() * 100.0) / projekt.getWymagania().size();
     }
 
-    private Double pojedynczyCzas(Map.Entry<Integer, Pracownik> entry) {
-
-        Double procent = entry.getValue().getProcentowyKosztDouczenia() / 100;
+    private Double pojedynczyCzas(Map.Entry<Integer, Pracownik> entry, Integer indexZadania) {
+        Double procent = 1 + entry.getValue().getProcentowyKosztDouczenia() / 100;
+        Double czasZadania = projekt.getZadania().get(indexZadania).getPrzewidywanyCzas();
                 
-        return null;
-        //return projekt.getWymagania().size();
+        return czasZadania * procent;
     }
 
-    private Double pojedynczyKoszt(Map.Entry<Integer, Pracownik> entry) {
-        List<String> temp;
-
-        temp = new ArrayList<String>(entry.getValue().getUmiejetnosci());
-        temp.retainAll(projekt.getWymagania());
-
-        //suma niezgodnosci
-        return 100 - (temp.size() * 100.0) / projekt.getWymagania().size();
+    private Double pojedynczyKoszt(Map.Entry<Integer, Pracownik> entry, Integer indexZadania) {
+        
+       Double czasZadania = pojedynczyCzas(entry, indexZadania);
+       
+       return entry.getValue().getKosztGodzinyPracy() * czasZadania;
     }
 
     public String toString() {
