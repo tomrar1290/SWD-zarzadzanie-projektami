@@ -14,8 +14,8 @@ import java.util.List;
 public class Pracownik {
   public final String name;
   private List<String> umiejetnosci;
-  private Float kosztGodzinyPracy;
-  private Float procentowyKosztDouczenia; 
+  private Double kosztGodzinyPracy;
+  private Double procentowyKosztDouczenia; 
 
   public Pracownik(String name){
     this.name = name;
@@ -29,19 +29,19 @@ public class Pracownik {
     this.umiejetnosci = umiejetnosci;
   }
   
-  public Float getKosztGodzinyPracy() {
+  public Double getKosztGodzinyPracy() {
     return kosztGodzinyPracy;
   }
   
-  public void setKosztGodzinyPracy(Float kosztGodzinyPracy) {
+  public void setKosztGodzinyPracy(Double kosztGodzinyPracy) {
     this.kosztGodzinyPracy = kosztGodzinyPracy;
   }
   
-  public Float getProcentowyKosztDouczenia() {
+  public Double getProcentowyKosztDouczenia() {
     return procentowyKosztDouczenia;
   }
   
-  public void setProcentowyKosztDouczenia(Float procentowyKosztDouczenia) {
+  public void setProcentowyKosztDouczenia(Double procentowyKosztDouczenia) {
     this.procentowyKosztDouczenia = procentowyKosztDouczenia;
   }
 //</editor-fold>

@@ -26,12 +26,14 @@ public class Decyzja {
     private Double niezgodnoscUmiejetnosci = null;
     private Double odlegloscOdDecyzjiIdealnej = null;
 
-    public Decyzja(int[] mozliwaDecyzja, Projekt projekt, Map<Integer, Pracownik> pracownicy) {
+    public Decyzja(List<Integer> mozliwaDecyzja, Projekt projekt, Map<Integer, Pracownik> pracownicy) {
         this.projekt = projekt;
         this.pracownikZadanie = new HashMap<>();
 
-        for (int i = 0; i < mozliwaDecyzja.length; i++) {
-            pracownikZadanie.put(i, pracownicy.get(mozliwaDecyzja[i]));
+        int index=0;
+        for (Integer i : mozliwaDecyzja) {
+            pracownikZadanie.put(i, pracownicy.get(mozliwaDecyzja.get(index)));
+            index++;
         }
     }
 
@@ -85,6 +87,34 @@ public class Decyzja {
         return niezgodnoscUmiejetnosci;
     }
 
+    private Double pojedynczaNiezgodnosc(Map.Entry<Integer, Pracownik> entry) {
+        List<String> temp;
+
+        temp = new ArrayList<String>(entry.getValue().getUmiejetnosci());
+        temp.retainAll(projekt.getWymagania());
+
+        //suma niezgodnosci
+        return 100 - (temp.size() * 100.0) / projekt.getWymagania().size();
+    }
+
+    private Double pojedynczyCzas(Map.Entry<Integer, Pracownik> entry) {
+
+        Double procent = entry.getValue().getProcentowyKosztDouczenia() / 100;
+                
+        return null;
+        //return projekt.getWymagania().size();
+    }
+
+    private Double pojedynczyKoszt(Map.Entry<Integer, Pracownik> entry) {
+        List<String> temp;
+
+        temp = new ArrayList<String>(entry.getValue().getUmiejetnosci());
+        temp.retainAll(projekt.getWymagania());
+
+        //suma niezgodnosci
+        return 100 - (temp.size() * 100.0) / projekt.getWymagania().size();
+    }
+
     public String toString() {
         String pracownicy = "";
         for (Map.Entry<Integer, Pracownik> entrySet : pracownikZadanie.entrySet()) {
@@ -97,8 +127,8 @@ public class Decyzja {
     public Double obliczOdlegloscOdDecyzjiIdealnej(Double czas, Double koszt, Double niezgodnosc) {
         odlegloscOdDecyzjiIdealnej = Math.sqrt(
                 Math.pow(pobierzKosztDecyzji() - koszt, 2)
-                + Math.pow(pobierzCzasDecyzji()- czas, 2)
-                + Math.pow(pobierzNiezgodnoscUmiejetnosci()- niezgodnosc, 2)
+                + Math.pow(pobierzCzasDecyzji() - czas, 2)
+                + Math.pow(pobierzNiezgodnoscUmiejetnosci() - niezgodnosc, 2)
         );
 
         return odlegloscOdDecyzjiIdealnej;

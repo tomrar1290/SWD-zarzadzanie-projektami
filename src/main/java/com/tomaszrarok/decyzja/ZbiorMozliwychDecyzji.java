@@ -31,23 +31,23 @@ public class ZbiorMozliwychDecyzji {
 
         this.projekt = projekt;
 
-        int[] wszyscyPracownicyZadania = new int[map.size() * projekt.getZadania().size()];
+        Integer[] wszyscyPracownicyZadania = new Integer[map.size() * projekt.getZadania().size()];
 
-        int index = 0;
+        Integer index = 0;
         for (Map.Entry<Integer, Pracownik> entry : map.entrySet()) {
             Integer key = entry.getKey();
-            for (int i = 0; i < projekt.getZadania().size(); i++) {
+            for (Integer i = 0; i < projekt.getZadania().size(); i++) {
                 wszyscyPracownicyZadania[index] = key;
                 index++;
             }
         }
 
         KombinacjaDecyzji kombinacjaDecyzji = new KombinacjaDecyzji(wszyscyPracownicyZadania, projekt.getZadania().size());
-        List<int[]> listaMozliwychDecyzji = kombinacjaDecyzji.getListaMozliwychDecyzji();
+        List<List<Integer>> listaMozliwychDecyzji = kombinacjaDecyzji.getListaMozliwychDecyzji();
 
         listaDecyzji = new ArrayList<>();
 
-        for (int[] mozliwaDecyzja : listaMozliwychDecyzji) {
+        for (List<Integer> mozliwaDecyzja : listaMozliwychDecyzji) {
             listaDecyzji.add(new Decyzja(mozliwaDecyzja, projekt, map));
         }
     }
@@ -67,9 +67,9 @@ public class ZbiorMozliwychDecyzji {
             }
         });
 
-        System.out.println("Czas");
+        //System.out.println("Czas");
         for (Decyzja listaDecyzji1 : listaDecyzji) {
-            System.out.println(listaDecyzji1.toString());
+            //System.out.println(listaDecyzji1.toString());
         }
 
         najmniejszyCzas = listaDecyzji.get(0).pobierzCzasDecyzji();
@@ -92,7 +92,7 @@ public class ZbiorMozliwychDecyzji {
 
         System.out.println("Koszt:");
         for (Decyzja listaDecyzji1 : listaDecyzji) {
-            System.out.println(listaDecyzji1.toString());
+            //System.out.println(listaDecyzji1.toString());
         }
 
         najmniejszyKoszt = listaDecyzji.get(0).pobierzKosztDecyzji();
@@ -112,15 +112,15 @@ public class ZbiorMozliwychDecyzji {
             }
         });
 
-        System.out.println("Niezgodnosc:");
+        //System.out.println("Niezgodnosc:");
         for (Decyzja listaDecyzji1 : listaDecyzji) {
-            System.out.println(listaDecyzji1.toString());
+            //System.out.println(listaDecyzji1.toString());
         }
 
         najmniejszaNiezgodnosc = listaDecyzji.get(0).pobierzNiezgodnoscUmiejetnosci();
     }
 
-    public void pokazNajblizszeIdealnej() {
+    public List<Decyzja> pobierzWedlugNajlepszej() {
         
         pokazNajkrotszyCzas();
         pokazNajmniejszyKoszt();
@@ -141,9 +141,11 @@ public class ZbiorMozliwychDecyzji {
 
         System.out.println("Idealnie:");
 
-        for (Decyzja listaDecyzji1 : listaDecyzji) {
-            System.out.println(listaDecyzji1.toString());
-        }
+        //for (Decyzja listaDecyzji1 : listaDecyzji) {
+        //    System.out.println(listaDecyzji1.toString());
+        //}
+        
+        return new ArrayList<Decyzja>(listaDecyzji);
     }
 
 }

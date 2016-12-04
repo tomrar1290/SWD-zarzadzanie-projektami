@@ -7,7 +7,9 @@ package com.tomaszrarok.decyzja;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  *
@@ -15,21 +17,21 @@ import java.util.List;
  */
 public class KombinacjaDecyzji {
   
-  private final List<int []> listaMozliwychDecyzji;
+  private final List<List<Integer>> listaMozliwychDecyzji;
 
-  public List<int[]> getListaMozliwychDecyzji() {
+  public List<List<Integer>> getListaMozliwychDecyzji() {
     return listaMozliwychDecyzji;
   }
   
-  public KombinacjaDecyzji(int [] listaWszystkichPracownikowZadan, int listaZadanProjekt){
+  public KombinacjaDecyzji(Integer [] listaWszystkichPracownikowZadan, Integer listaZadanProjekt){
      listaMozliwychDecyzji = new ArrayList<>();     
      zapiszMozliweKombinacje(listaWszystkichPracownikowZadan, listaWszystkichPracownikowZadan.length, listaZadanProjekt);     
   }
   
   // Głowna funkcja do wyszukania kombinacji o rozmiarze r z tablicy arr[] o rozmiarze n
-  private void zapiszMozliweKombinacje(int arr[], int n, int r) {
+  private void zapiszMozliweKombinacje(Integer arr[], Integer n, Integer r) {
     // przechowuj kolejne kombinacje w tablicy data
-    int[] data = new int[r];
+    Integer[] data = new Integer[r];
 
     // posortuj tablice, by uniknąć duplikatów
     Arrays.sort(arr);
@@ -38,11 +40,11 @@ public class KombinacjaDecyzji {
     znajdzKombinacje(arr, data, 0, n - 1, 0, r);
   }
 
-  private void znajdzKombinacje(int arr[], int data[], int start, int end, int index, int r) {
+  private void znajdzKombinacje(Integer arr[], Integer data[], Integer start, Integer end, Integer index, Integer r) {
 
     if (index == r) {
       //kombinacja ma rozmiar szukany r, szukaj kolejnych
-      listaMozliwychDecyzji.add( Arrays.copyOf(data, data.length) );     
+      listaMozliwychDecyzji.addAll( pobierzPermutacje(data) );     
       return;
     }
 
@@ -56,5 +58,31 @@ public class KombinacjaDecyzji {
       }
     }
   }
+  
+    private Set<List<Integer>> pobierzPermutacje(Integer [] combination) { 
+      //System.err.println("Permutacja: " + Arrays.toString(combination));
+      Set<List<Integer>> setOfArray = new HashSet<>();
+        
+      //pobierzPermutacje(combination, 0, setOfArray); 
+      System.err.println(setOfArray.toString());
+      return setOfArray;
+  }
+    
+    private void pobierzPermutacje(Integer[] input, Integer startindex, Set<List<Integer>> setOfArrays) {
+        int size = input.length;
+
+        if (size == startindex + 1) {
+            setOfArrays.add(Arrays.asList( Arrays.copyOf(input, input.length)));
+        } else {
+            for (int i = startindex; i < size; i++) {
+
+                int temp = input[i];
+                input[i] = input[startindex];
+                input[startindex] = temp;
+                pobierzPermutacje(input, startindex + 1, setOfArrays);
+            }
+        }
+    }
+
   
 }

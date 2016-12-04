@@ -44,29 +44,29 @@ public class Main {
         Zadanie zadanie6 = new Zadanie(20.0);
         Zadanie zadanie7 = new Zadanie(4.0);
 
-        List zadania = new ArrayList( Arrays.asList(zadanie1, zadanie2, zadanie3, zadanie4, zadanie5, zadanie6, zadanie7));
+        List zadania = new ArrayList( Arrays.asList(zadanie1, zadanie2, zadanie3));
         
         projekt.setZadania(zadania);
         projekt.setWymagania(new ArrayList<>(Arrays.asList(new String[]{"umiejetnosc1", "umiejetnosc2", "umiejetnosc3", "umiejetnosc4", "umiejetnosc5", "umiejetnosc6"})));
 
         //PRACOWNIK 1
         Pracownik pracownik1 = new Pracownik("p1");
-        pracownik1.setKosztGodzinyPracy(20.0f);
+        pracownik1.setKosztGodzinyPracy(20.0);
         pracownik1.setUmiejetnosci(new ArrayList<>(Arrays.asList(new String[]{"umiejetnosc1", "umiejetnosc2", "umiejetnosc3", "umiejetnosc4", "umiejetnosc5"})));
 
         //PRACOWNIK 2
         Pracownik pracownik2 = new Pracownik("p2");
-        pracownik2.setKosztGodzinyPracy(18.0f);
+        pracownik2.setKosztGodzinyPracy(18.0);
         pracownik2.setUmiejetnosci(new ArrayList<>(Arrays.asList(new String[]{"umiejetnosc1", "umiejetnosc2", "umiejetnosc3", "umiejetnosc4"})));
 
         //PRACOWNIK 3
         Pracownik pracownik3 = new Pracownik("p3");
-        pracownik3.setKosztGodzinyPracy(15.0f);
+        pracownik3.setKosztGodzinyPracy(15.0);
         pracownik3.setUmiejetnosci(new ArrayList<>(Arrays.asList(new String[]{"umiejetnosc1", "umiejetnosc2", "umiejetnosc3"})));
 
         //PRACOWNIK 4
         Pracownik pracownik4 = new Pracownik("p4");
-        pracownik4.setKosztGodzinyPracy(25.0f);
+        pracownik4.setKosztGodzinyPracy(25.0);
         pracownik4.setUmiejetnosci(new ArrayList<String>(Arrays.asList(new String[]{"umiejetnosc1", "umiejetnosc2"})));
 
         DaneWejsciowe daneWejsciowe;
@@ -80,18 +80,18 @@ public class Main {
             System.out.println("Hi Gson! "+gson.toJson(daneWejsciowe));
             gson.toJson(daneWejsciowe, new FileWriter("D:\\file.json"));
         } catch (IOException ex) {
-            System.out.println( ex );
+        
         }
         
         HashMap<Integer, Pracownik> mapaPracownikow = new HashMap<>();
         mapaPracownikow.put(1, pracownik1);
         mapaPracownikow.put(2, pracownik2);
         mapaPracownikow.put(3, pracownik3);
-        mapaPracownikow.put(4, pracownik4);
+        //mapaPracownikow.put(4, pracownik4);
 
         ZbiorMozliwychDecyzji zmd = new ZbiorMozliwychDecyzji(projekt, mapaPracownikow);
         
-        //zmd.pokazNajblizszeIdealnej();
+        //zmd.pobierzWedlugNajlepszej();
 
     }
 
