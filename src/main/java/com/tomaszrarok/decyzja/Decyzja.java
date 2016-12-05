@@ -97,7 +97,15 @@ public class Decyzja {
     }
 
     private Double pojedynczyCzas(Map.Entry<Integer, Pracownik> entry, Integer indexZadania) {
-        Double procent = 1 + entry.getValue().getProcentowyKosztDouczenia() / 100;
+        List<String> temp;
+
+        temp = new ArrayList<String>(entry.getValue().getUmiejetnosci());
+        temp.retainAll(projekt.getWymagania());
+        
+        Integer brakiUmiejetnosci = projekt.getWymagania().size() - temp.size();
+        
+        
+        Double procent = 1 + brakiUmiejetnosci * (entry.getValue().getProcentowyKosztDouczenia() / 100);
         Double czasZadania = projekt.getZadania().get(indexZadania).getPrzewidywanyCzas();
                 
         return czasZadania * procent;

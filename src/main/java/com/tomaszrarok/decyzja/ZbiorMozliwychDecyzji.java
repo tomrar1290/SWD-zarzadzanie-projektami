@@ -90,7 +90,7 @@ public class ZbiorMozliwychDecyzji {
             }
         });
 
-        System.out.println("Koszt:");
+        //System.out.println("Koszt:");
         for (Decyzja listaDecyzji1 : listaDecyzji) {
             //System.out.println(listaDecyzji1.toString());
         }
