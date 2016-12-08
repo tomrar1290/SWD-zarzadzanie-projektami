@@ -11,6 +11,7 @@ import com.tomaszrarok.danewejsciowe.DaneWejsciowe;
 import com.tomaszrarok.danewejsciowe.Pracownik;
 import com.tomaszrarok.danewejsciowe.Projekt;
 import com.tomaszrarok.danewejsciowe.Zadanie;
+import com.tomaszrarok.decyzja.Decyzja;
 import com.tomaszrarok.decyzja.ZbiorMozliwychDecyzji;
 import java.io.File;
 import java.io.FileReader;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
@@ -82,11 +84,6 @@ public class GlowneOkno extends javax.swing.JFrame {
         jLabel2.setText("Wyniki");
         jLabel2.setToolTipText("");
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         jScrollPane2.setViewportView(jList1);
 
         jButton3.setText("start");
@@ -232,7 +229,17 @@ public class GlowneOkno extends javax.swing.JFrame {
         }
         ZbiorMozliwychDecyzji zmd = new ZbiorMozliwychDecyzji(dw.getProjekt(), mapaPracownikow);
         
-        zmd.pobierzWedlugNajlepszej();
+        List<Decyzja> decyzje = zmd.pobierzWedlugNajlepszej();
+        
+        DefaultListModel listModel = new DefaultListModel();
+        for(Decyzja item : decyzje.subList(0, 50)){
+            listModel.addElement(item.toString());
+        }
+        
+        jList1.setModel(listModel);
+        
+        
+        
         
     }//GEN-LAST:event_jButton3ActionPerformed
 
