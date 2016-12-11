@@ -48,6 +48,7 @@ public class ZbiorMozliwychDecyzji {
         listaDecyzji = new ArrayList<>();
 
         for (List<Integer> mozliwaDecyzja : listaMozliwychDecyzji) {
+            System.out.println(mozliwaDecyzja.toString());
             listaDecyzji.add(new Decyzja(mozliwaDecyzja, projekt, map));
         }
     }
@@ -91,9 +92,6 @@ public class ZbiorMozliwychDecyzji {
         });
 
         //System.out.println("Koszt:");
-        for (Decyzja listaDecyzji1 : listaDecyzji) {
-            //System.out.println(listaDecyzji1.toString());
-        }
 
         najmniejszyKoszt = listaDecyzji.get(0).pobierzKosztDecyzji();
     }
@@ -113,9 +111,6 @@ public class ZbiorMozliwychDecyzji {
         });
 
         //System.out.println("Niezgodnosc:");
-        for (Decyzja listaDecyzji1 : listaDecyzji) {
-            //System.out.println(listaDecyzji1.toString());
-        }
 
         najmniejszaNiezgodnosc = listaDecyzji.get(0).pobierzNiezgodnoscUmiejetnosci();
     }
@@ -139,12 +134,6 @@ public class ZbiorMozliwychDecyzji {
             }
         });
 
-        System.out.println("Idealnie:");
-
-        for (Decyzja listaDecyzji1 : listaDecyzji) {
-            System.out.println(listaDecyzji1.toString());
-        }
-        
         return new ArrayList<Decyzja>(listaDecyzji);
     }
 

@@ -45,9 +45,9 @@ public class KombinacjaDecyzji {
   private void znajdzKombinacje(Integer arr[], Integer data[], Integer start, Integer end, Integer index, Integer r) {
 
     if (Objects.equals(index, r)) {
-      //System.out.println(Arrays.toString(data));
+      System.out.println(Arrays.toString(data));
       //kombinacja ma rozmiar szukany r, szukaj kolejnych
-      listaMozliwychDecyzji.addAll( pobierzPermutacje(data) );     
+      listaMozliwychDecyzji.addAll( pobierzPermutacje(Arrays.copyOf(data, data.length)) );     
       return;
     }
 
