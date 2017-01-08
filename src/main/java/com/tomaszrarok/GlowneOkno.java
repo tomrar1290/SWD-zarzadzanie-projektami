@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -112,7 +113,7 @@ public class GlowneOkno extends javax.swing.JFrame {
                                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 247, Short.MAX_VALUE)))
+                        .addGap(0, 695, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -126,11 +127,11 @@ public class GlowneOkno extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 358, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -142,7 +143,10 @@ public class GlowneOkno extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(33, 33, 33)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -173,6 +177,11 @@ public class GlowneOkno extends javax.swing.JFrame {
         Zadanie zadanie5 = new Zadanie(6.0);
         Zadanie zadanie6 = new Zadanie(20.0);
         Zadanie zadanie7 = new Zadanie(4.0);
+        
+        Map<String, Double> priorytety = new HashMap<String, Double>();
+        priorytety.put("czas", 1.2);
+        priorytety.put("koszt", 1.2);
+        priorytety.put("umiejetnosc", 1.2);
 
         List zadania = new ArrayList( Arrays.asList(zadanie1, zadanie2, zadanie3, zadanie4, zadanie5, zadanie6, zadanie7));
         
@@ -204,7 +213,7 @@ public class GlowneOkno extends javax.swing.JFrame {
         pracownik4.setUmiejetnosci(new ArrayList<String>(Arrays.asList(new String[]{"umiejetnosc1", "umiejetnosc2"})));
         
         DaneWejsciowe daneWejsciowe;
-        daneWejsciowe = new DaneWejsciowe(projekt, Arrays.asList(pracownik1, pracownik2, pracownik3, pracownik4));
+        daneWejsciowe = new DaneWejsciowe(priorytety, projekt, Arrays.asList(pracownik1, pracownik2, pracownik3, pracownik4));
         
          Gson gson = new GsonBuilder().setPrettyPrinting().create();
          
@@ -222,20 +231,35 @@ public class GlowneOkno extends javax.swing.JFrame {
             return;
         }        
         
+        String validation = dw.validation();
+        if( validation != null){
+            showAlert(validation);
+            return;
+        }
         HashMap<Integer, Pracownik> mapaPracownikow = new HashMap<>();
         int i = 1;
         for(Pracownik p : dw.getPracownicy()){
             mapaPracownikow.put(i, p);
             i++;
         }
-        ZbiorMozliwychDecyzji zmd = new ZbiorMozliwychDecyzji(dw.getProjekt(), mapaPracownikow);
+        ZbiorMozliwychDecyzji zmd = new ZbiorMozliwychDecyzji(dw.getProjekt(), mapaPracownikow, dw.getPriorytety());
         
         List<Decyzja> decyzje = zmd.pobierzWedlugNajlepszej();
         
         DefaultListModel listModel = new DefaultListModel();
-        if( decyzje.size() > 50 ){
-            decyzje.subList(0, 50);
+        if( decyzje.size() > 10 ){
+            decyzje = decyzje.subList(0, 10);
         }
+        listModel.addElement("Niepreferencyjna");
+        for(Decyzja item : decyzje){
+            listModel.addElement(item.toString());
+        }
+        
+        decyzje = zmd.pobierzWedlugApriori();
+        if( decyzje.size() > 10 ){
+            decyzje = decyzje.subList(0, 10);
+        }
+        listModel.addElement("Preferencyjna Apriori - metoda ograniczonych kryteriow");        
         for(Decyzja item : decyzje){
             listModel.addElement(item.toString());
         }

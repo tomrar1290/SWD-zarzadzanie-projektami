@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -25,11 +26,13 @@ public class ZbiorMozliwychDecyzji {
     private Double najmniejszaNiezgodnosc = 0.0;
 
     private List<Decyzja> listaDecyzji;
-    private Projekt projekt;
+    private final Projekt projekt;
+    private final Map<String, Double> priorytety;
 
-    public ZbiorMozliwychDecyzji(Projekt projekt, HashMap<Integer, Pracownik> map) {
+    public ZbiorMozliwychDecyzji(Projekt projekt, Map<Integer, Pracownik> map, Map<String, Double> priorytety) {
 
         this.projekt = projekt;
+        this.priorytety = priorytety;
 
         Integer[] wszyscyPracownicyZadania = new Integer[map.size() * projekt.getZadania().size()];
 
@@ -92,7 +95,6 @@ public class ZbiorMozliwychDecyzji {
         });
 
         //System.out.println("Koszt:");
-
         najmniejszyKoszt = listaDecyzji.get(0).pobierzKosztDecyzji();
     }
 
@@ -111,12 +113,11 @@ public class ZbiorMozliwychDecyzji {
         });
 
         //System.out.println("Niezgodnosc:");
-
         najmniejszaNiezgodnosc = listaDecyzji.get(0).pobierzNiezgodnoscUmiejetnosci();
     }
 
     public List<Decyzja> pobierzWedlugNajlepszej() {
-        
+
         pokazNajkrotszyCzas();
         pokazNajmniejszyKoszt();
         pokazNajmiejszaNiezgodnosc();
@@ -135,6 +136,52 @@ public class ZbiorMozliwychDecyzji {
         });
 
         return new ArrayList<Decyzja>(listaDecyzji);
+    }
+
+    public List<Decyzja> pobierzWedlugApriori() {
+        List<Decyzja> listaApriori = new ArrayList<>(listaDecyzji);
+        //zapisujemy parametr, po wykonaniu petli mozemy posortowac
+        String parametrOptymalizacji = null;
+        for (Map.Entry<String, Double> entry : priorytety.entrySet()) {
+            Iterator<Decyzja> iter = listaApriori.iterator();
+            while (iter.hasNext()) {
+                parametrOptymalizacji = entry.getKey();
+                if (entry.getKey().equals(DW_KOSZT)) {
+                    if (iter.next().pobierzKosztDecyzji() > entry.getValue() * najmniejszyKoszt) {
+                        iter.remove();
+                    }
+                }
+                if (entry.getKey().equals(DW_CZAS)) {
+                    if (iter.next().pobierzCzasDecyzji() > entry.getValue() * najmniejszyCzas) {
+                        iter.remove();
+                    }
+                }
+                if (entry.getKey().equals(DW_UMIEJETNOSC)) {
+                    if (iter.next().pobierzNiezgodnoscUmiejetnosci() > entry.getValue() * najmniejszaNiezgodnosc) {
+                        iter.remove();
+                    }
+                }
+            }
+        }
+
+        pokazPoOstatnimKrytzerium(parametrOptymalizacji);
+        return listaApriori;
+    }
+    
+    public static final String DW_UMIEJETNOSC = "umiejetnosc";
+    public static final String DW_CZAS = "czas";
+    public static final String DW_KOSZT = "koszt";
+
+    private void pokazPoOstatnimKrytzerium(String parametrOptymalizacji) {
+        if (parametrOptymalizacji.equals(DW_KOSZT)) {
+            pokazNajmniejszyKoszt();
+        }
+        if (parametrOptymalizacji.equals(DW_CZAS)) {
+            pokazNajkrotszyCzas();
+        }
+        if (parametrOptymalizacji.equals(DW_UMIEJETNOSC)) {
+            pokazNajmiejszaNiezgodnosc();
+        }
     }
 
 }

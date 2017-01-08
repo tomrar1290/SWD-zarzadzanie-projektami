@@ -93,9 +93,9 @@ public class Main {
         mapaPracownikow.put(3, pracownik3);
         //mapaPracownikow.put(4, pracownik4);
 
-        ZbiorMozliwychDecyzji zmd = new ZbiorMozliwychDecyzji(projekt, mapaPracownikow);
+        //ZbiorMozliwychDecyzji zmd = new ZbiorMozliwychDecyzji(projekt, mapaPracownikow);
         
-        zmd.pobierzWedlugNajlepszej();
+        //zmd.pobierzWedlugNajlepszej();
 
     }
 
