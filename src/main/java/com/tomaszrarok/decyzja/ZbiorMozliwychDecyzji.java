@@ -57,7 +57,13 @@ public class ZbiorMozliwychDecyzji {
     }
 
     private void pokazNajkrotszyCzas() {
+        pokazNajkrotszyCzas(null);
+    }
 
+    private void pokazNajkrotszyCzas(List<Decyzja> listaDecyzji) {
+        if (listaDecyzji == null) {
+            listaDecyzji = this.listaDecyzji;
+        }
         //posortuj po czasie
         Collections.sort(listaDecyzji, new Comparator<Decyzja>() {
             @Override
@@ -71,16 +77,18 @@ public class ZbiorMozliwychDecyzji {
             }
         });
 
-        //System.out.println("Czas");
-        for (Decyzja listaDecyzji1 : listaDecyzji) {
-            //System.out.println(listaDecyzji1.toString());
-        }
-
         najmniejszyCzas = listaDecyzji.get(0).pobierzCzasDecyzji();
 
     }
 
     private void pokazNajmniejszyKoszt() {
+        pokazNajmniejszyKoszt(null);
+    }
+
+    private void pokazNajmniejszyKoszt(List<Decyzja> listaDecyzji) {
+        if (listaDecyzji == null) {
+            listaDecyzji = this.listaDecyzji;
+        }
         //posortuj po koszcie
         Collections.sort(listaDecyzji, new Comparator<Decyzja>() {
             @Override
@@ -99,6 +107,13 @@ public class ZbiorMozliwychDecyzji {
     }
 
     private void pokazNajmiejszaNiezgodnosc() {
+        pokazNajmiejszaNiezgodnosc(null);
+    }
+
+    private void pokazNajmiejszaNiezgodnosc(List<Decyzja> listaDecyzji) {
+        if (listaDecyzji == null) {
+            listaDecyzji = this.listaDecyzji;
+        }
         //posortuj po niezgodnosci
         Collections.sort(listaDecyzji, new Comparator<Decyzja>() {
             @Override
@@ -142,6 +157,7 @@ public class ZbiorMozliwychDecyzji {
         List<Decyzja> listaApriori = new ArrayList<>(listaDecyzji);
         //zapisujemy parametr, po wykonaniu petli mozemy posortowac
         String parametrOptymalizacji = null;
+        int i = 1;
         for (Map.Entry<String, Double> entry : priorytety.entrySet()) {
             Iterator<Decyzja> iter = listaApriori.iterator();
             while (iter.hasNext()) {
@@ -164,23 +180,23 @@ public class ZbiorMozliwychDecyzji {
             }
         }
 
-        pokazPoOstatnimKrytzerium(parametrOptymalizacji);
+        pokazPoOstatnimKrytzerium(listaApriori,parametrOptymalizacji);
         return listaApriori;
     }
-    
+
     public static final String DW_UMIEJETNOSC = "umiejetnosc";
     public static final String DW_CZAS = "czas";
     public static final String DW_KOSZT = "koszt";
 
-    private void pokazPoOstatnimKrytzerium(String parametrOptymalizacji) {
+    private void pokazPoOstatnimKrytzerium(List<Decyzja> listaApriori, String parametrOptymalizacji) {
         if (parametrOptymalizacji.equals(DW_KOSZT)) {
-            pokazNajmniejszyKoszt();
+            pokazNajmniejszyKoszt(listaApriori);
         }
         if (parametrOptymalizacji.equals(DW_CZAS)) {
-            pokazNajkrotszyCzas();
+            pokazNajkrotszyCzas(listaApriori);
         }
         if (parametrOptymalizacji.equals(DW_UMIEJETNOSC)) {
-            pokazNajmiejszaNiezgodnosc();
+            pokazNajmiejszaNiezgodnosc(listaApriori);
         }
     }
 
