@@ -7,6 +7,7 @@ package com.tomaszrarok;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonSyntaxException;
 import com.tomaszrarok.danewejsciowe.DaneWejsciowe;
 import com.tomaszrarok.danewejsciowe.Pracownik;
 import com.tomaszrarok.danewejsciowe.Projekt;
@@ -224,8 +225,13 @@ public class GlowneOkno extends javax.swing.JFrame {
          
         Gson gson = new Gson();
         
-        DaneWejsciowe dw = gson.fromJson(jTextArea1.getText(), DaneWejsciowe.class);       
-        
+        DaneWejsciowe dw = null;
+        try{
+            dw = gson.fromJson(jTextArea1.getText(), DaneWejsciowe.class); 
+        } catch(JsonSyntaxException ex){
+            
+        }
+             
         if(dw == null ){
             showAlert("Nie moglem przeczytac danych wejsciowych!");
             return;

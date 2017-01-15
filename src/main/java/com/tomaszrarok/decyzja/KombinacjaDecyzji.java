@@ -85,7 +85,5 @@ public class KombinacjaDecyzji {
                 pobierzPermutacje(input, startindex + 1, setOfArrays);
             }
         }
-    }
-
-  
+    }  
 }
